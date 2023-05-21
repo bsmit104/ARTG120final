@@ -3,8 +3,10 @@
 'use strict';
 
 var map;
+var smap;
 var player;
 var groundLayer;
+var sgroundLayer;
 let cursors;
 
 var config = {
@@ -18,10 +20,10 @@ var config = {
                 x: 0,
                 y: 0
             },
-            debug: false
+            debug: true
         }
     },
-    scene: [Start, Intro, Title, Level1, Level2, Level4]
+    scene: [Cut1] //[Start, Intro, Title, Level1, Level2, Level3, Level4]
     //{
         // key: 'main',
         // preload: preload,
