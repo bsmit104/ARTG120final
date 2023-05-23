@@ -74,7 +74,7 @@ class Title extends Phaser.Scene {
             playText.setStyle({ fill: '#fff' });
         });
         playText.on('pointerdown', () => {
-            this.scene.start('level2');
+            this.scene.start('level1');
         });
 
         // const space = this.add.image(200, 0, 'space');

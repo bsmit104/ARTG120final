@@ -18,10 +18,46 @@ class Cut1 extends Phaser.Scene {
         this.posob.setScale(15);
         this.anims.create({
             key: 'pos',
-            frames: this.anims.generateFrameNumbers('pos', { start: 0, end: 28 }),
+            frames: this.anims.generateFrameNumbers('pos', { start: 0, end: 27 }),
             frameRate: 10,
-            repeat: -1
+            repeat: 0,
+            // onComplete: () => {
+            //     this.textObject8 = this.add.text(
+            //         300, //x
+            //         420,//y
+            //         "tap", //text
+            //         {
+            //             font: "60px Impact",
+            //             color: "#FFFFFF",
+            //             align: "center"
+            //         } //style
+            //     );
+                // this.tweens.add({
+                //     targets: this.textObject8,
+                //     alpha:0,
+                //     duration: 2000,
+                //     repeat: -1,
+                // });
+            // }
+
         });
         this.posob.anims.play('pos', true);
+        this.textObject8 = this.add.text(
+            700, //x
+            500,//y
+            "tap", //text
+            {
+                font: "30px Impact",
+                color: "#FFFFFF",
+                align: "center"
+            } //style
+        );
+        this.tweens.add({
+            targets: this.textObject8,
+            alpha:0,
+            duration: 2000,
+            repeat: -1,
+        });
+        this.input.on('pointerdown', () => this.scene.start('level2'));
     }
 }

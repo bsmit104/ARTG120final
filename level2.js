@@ -52,7 +52,7 @@ class Level2 extends Phaser.Scene {
         ///////////////to menu/////////////////////
         if (!this.physics.world.bounds.contains(this.slime.x, this.slime.y)) {
             // Scene change logic
-            this.scene.start('level3');
+            this.scene.start('cut2');
         }
     }
 }

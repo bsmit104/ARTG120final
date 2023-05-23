@@ -27,11 +27,21 @@ class Level3 extends Phaser.Scene {
 
         // debugger;
         //////////////FIXXXXXXXXXXXXXXXX MEEEEEEEEEEEEEEE////////////////////
-        this.arco = this.add.sprite(1500, 220, 'arc').setScale(.6); //*8
-        
+        //this.arco = this.add.sprite(1500, 220, 'arc').setScale(.6); //*8
+        this.arc = this.physics.add.sprite(
+            1500 * 8 + 100,//x
+            220,//y
+            'arc',//imagename
+        )
+        this.arc.body.allowGravity = false;
+        this.arc.setDepth(1);
+        this.arc.setImmovable(true);
+        this.arc.setVisible(true);
+        this.arc.setScale(.6) //resize
+
         //this.arco.setDepth(1);
         // this.arco.setScale(.6)
-;        // load the map 
+        // load the map 
         smap = this.make.tilemap({ key: 'sewermap' });
 
         // tiles for the ground layer
@@ -110,6 +120,15 @@ class Level3 extends Phaser.Scene {
         // sew.setOrigin(0);
         // sew.setDepth(0);
         // sew.setScale(1.2);
+
+        
+        this.physics.add.collider(player, this.arc, nextsce, null, this);
+        // Collision callback function
+        function nextsce() {
+            // Trigger the scene change here
+            // For example:
+            this.scene.start('level4');
+        }
     }
 
     update() {

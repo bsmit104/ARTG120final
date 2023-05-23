@@ -26,7 +26,7 @@ create() {
     var groundTiles = map.addTilesetImage('tiles');
     // create the ground layer
     //groundLayer = map.createDynamicLayer('World', groundTiles, 0, 0);
-    groundLayer = map.createLayer('Ground', groundTiles, 0, 0).setScale(4);;
+    groundLayer = map.createLayer('Ground', groundTiles, 0, 0).setScale(4);
     // the player will collide with this layer
     groundLayer.setCollisionByExclusion([-1]);
 
