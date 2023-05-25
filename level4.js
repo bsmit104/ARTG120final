@@ -87,7 +87,24 @@ create() {
     // create the player sprite    
     player = this.physics.add.sprite(200 * 4, 200 * 4, 'player');
     player.setBounce(0.2); // our player will bounce from items
-    player.setCollideWorldBounds(true); // don't go out of the map    
+    player.setCollideWorldBounds(true); // don't go out of the map   
+    
+            const duration = 2000; // Duration in milliseconds
+            const numFlashes = 4; // Number of times the sprite will flash
+            // Define the tween animation
+            this.tweens.add({
+                targets: player,
+                alpha: 0, // Make the sprite transparent
+                ease: 'Linear',
+                duration: duration / (2 * numFlashes), // Divide the duration evenly across the number of flashes
+                repeat: numFlashes - 1, // Number of additional flashes (subtracting the initial state)
+                yoyo: true, // Make the tween reverse back to its initial state
+                onComplete: () => {
+                    // Reset the sprite's alpha to 1 (fully opaque) after the tween is complete
+                    player.alpha = 1;
+                }
+            });
+
     
     var objectLayer = map.getObjectLayer('objects');
     var start = objectLayer.objects.find(obj => obj.name === 'start');

@@ -75,6 +75,23 @@ class Level3 extends Phaser.Scene {
         //player.setCollideWorldBounds(true); // don't go out of the map   
         player.setDepth(1); 
 
+            const duration = 2000; // Duration in milliseconds
+            const numFlashes = 4; // Number of times the sprite will flash
+            // Define the tween animation
+            this.tweens.add({
+                targets: player,
+                alpha: 0, // Make the sprite transparent
+                ease: 'Linear',
+                duration: duration / (2 * numFlashes), // Divide the duration evenly across the number of flashes
+                repeat: numFlashes - 1, // Number of additional flashes (subtracting the initial state)
+                yoyo: true, // Make the tween reverse back to its initial state
+                onComplete: () => {
+                    // Reset the sprite's alpha to 1 (fully opaque) after the tween is complete
+                    player.alpha = 1;
+                }
+            });
+
+
         var objectLayer = smap.getObjectLayer('objs');
         var start = objectLayer.objects.find(obj => obj.name === 'start');
         player.setPosition(start.x * 8, start.y * 8);
@@ -115,7 +132,7 @@ class Level3 extends Phaser.Scene {
         // this.slime.setDepth(1);
 
         // cursors = this.input.keyboard.createCursorKeys();
-        this.cameras.main.setBackgroundColor('#808080');
+        this.cameras.main.setBackgroundColor('#142702');
         // const sew = this.add.image(0, 0, 'sewa');
         // sew.setOrigin(0);
         // sew.setDepth(0);

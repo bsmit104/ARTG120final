@@ -32,6 +32,6 @@ class Cut3 extends Phaser.Scene {
             duration: 2000,
             repeat: -1,
         });
-        this.input.on('pointerdown', () => this.scene.start('level2'));
+        this.input.on('pointerdown', () => this.scene.start('start'));
     }
 }

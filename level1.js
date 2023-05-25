@@ -15,6 +15,30 @@ class Level1 extends Phaser.Scene {
         this.load.spritesheet('waterlevel', 'waterlevel.png', { frameWidth: 16, frameHeight: 16 });
     }
     create() {
+        this.eGroup = this.physics.add.group([
+            this.add.rectangle(200, 170, 100, 100, 0xFF0000)
+                .setDepth(1)
+                .setVisible(false),
+            this.add.rectangle(1100, 170, 100, 100, 0xFF0000)
+                .setDepth(1)
+                .setVisible(false),
+            this.add.rectangle(1000, 500, 100, 100, 0xFF0000)
+                .setDepth(1)
+                .setVisible(false),
+            this.add.rectangle(340, 550, 100, 50, 0xFF0000)
+                .setDepth(1)
+                .setVisible(false),
+            this.add.rectangle(690, 250, 100, 50, 0xFF0000)
+                .setDepth(1)
+                .setVisible(false),
+            this.add.rectangle(600, 730, 100, 50, 0xFF0000)
+                .setDepth(1)
+                .setVisible(false),
+            this.add.rectangle(1200, 730, 100, 50, 0xFF0000)
+                .setDepth(1)
+                .setVisible(false),
+        ]);
+
         smap = this.make.tilemap({ key: 'watlev' });
 
         // tiles for the ground layer
@@ -46,6 +70,9 @@ class Level1 extends Phaser.Scene {
         this.leftKey.setDepth(1);
         this.downKey.setDepth(1);
         this.rightKey.setDepth(1);
+
+        const duration = 2000; // Duration in milliseconds
+        const numFlashes = 4; // Number of times the sprite will flash
         //FISH
         this.fish = this.physics.add.sprite(100, 300, 'fish');
         this.fish.setScale(.5);
@@ -56,6 +83,18 @@ class Level1 extends Phaser.Scene {
             repeat: -1
         });
         this.fish.anims.play('fish', true);
+        this.tweens.add({
+            targets: this.fish,
+            alpha: 0, // Make the sprite transparent
+            ease: 'Linear',
+            duration: duration / (2 * numFlashes), // Divide the duration evenly across the number of flashes
+            repeat: numFlashes - 1, // Number of additional flashes (subtracting the initial state)
+            yoyo: true, // Make the tween reverse back to its initial state
+            onComplete: () => {
+                // Reset the sprite's alpha to 1 (fully opaque) after the tween is complete
+                this.fish.alpha = 1;
+            }
+        });
 
         this.fish.setMaxVelocity(this.MAX_VELOCITY);
         this.fish.setDamping(true);
@@ -103,6 +142,14 @@ class Level1 extends Phaser.Scene {
         aguaob.setScale(7);
     }
     update() {
+        this.physics.add.collider(this.fish, this.eGroup, redo1, null, this);
+        // Collision callback function
+        function redo1() {
+            // Trigger the scene change here
+            // For example:
+            this.scene.start('level1');
+        }
+
         if (cursors.up.isDown) {
             this.physics.velocityFromRotation(this.fish.rotation - Math.PI / 2 * 3, 200, this.fish.body.acceleration);
             this.upKey.tint = 0xFACADE;     // tint keyboard key

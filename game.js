@@ -26,10 +26,10 @@ var config = {
                 x: 0,
                 y: 0
             },
-            debug: true
+            debug: false
         }
     },
-    scene: [Level4] //[Start, Intro, Title, Level1, Cut0, Level2, Cut1, Level3, Cut2, Level4, Cut3]
+    scene: [Start, Intro, Title, Level1, Cut0, Level2, Cut1, Level3, Cut2, Level4, Cut3]
     //{
         // key: 'main',
         // preload: preload,

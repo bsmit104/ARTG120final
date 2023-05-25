@@ -31,6 +31,23 @@ class Level2 extends Phaser.Scene {
         this.slime.anims.play('slime', true);
         this.slime.setDepth(1);
 
+        const duration = 2000; // Duration in milliseconds
+            const numFlashes = 4; // Number of times the sprite will flash
+            // Define the tween animation
+            this.tweens.add({
+                targets: this.slime,
+                alpha: 0, // Make the sprite transparent
+                ease: 'Linear',
+                duration: duration / (2 * numFlashes), // Divide the duration evenly across the number of flashes
+                repeat: numFlashes - 1, // Number of additional flashes (subtracting the initial state)
+                yoyo: true, // Make the tween reverse back to its initial state
+                onComplete: () => {
+                    // Reset the sprite's alpha to 1 (fully opaque) after the tween is complete
+                    this.slime.alpha = 1;
+                }
+            });
+
+
         cursors = this.input.keyboard.createCursorKeys();
         
         const sew = this.add.image(0, 0, 'sewa');
