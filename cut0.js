@@ -6,6 +6,7 @@ class Cut0 extends Phaser.Scene {
         this.load.path = "./assets/";
         this.load.image('arrowKey', 'arrowKey.png');
         this.load.image('agua', 'waterBG.png');
+        this.load.video("fishvid", "fish.mp4");
         this.load.spritesheet('pos', 'slimepossess.png', {
             frameWidth: 50,
             frameHeight: 12,
@@ -14,7 +15,10 @@ class Cut0 extends Phaser.Scene {
         }); //29
     }
     create() {
-        this.add.text(300, 300, "cut 0");
+        //this.add.text(300, 300, "cut 0");
+
+        const video = this.add.video(400, 300, "fishvid");
+        video.play(true);
 
         this.textObject8 = this.add.text(
             700, //x

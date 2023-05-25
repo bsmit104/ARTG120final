@@ -14,10 +14,60 @@ preload() {
     // // simple coin image
     // player animations
     this.load.image('player', 'bigman.png');
+    this.load.image('flag', 'flag.png');
     //this.load.atlas('player', 'player.png', 'player.json');
 }
 
 create() {
+    this.rectangleGroup = this.physics.add.group([
+        this.add.rectangle(100, 800, 4000, 100, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+        
+        this.add.rectangle(225, 660, 60, 60, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+
+        this.add.rectangle(480, 530, 60, 60, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+            
+        this.add.rectangle(700, 400, 120, 60, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+        this.add.rectangle(1160, 600, 120, 60, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+        this.add.rectangle(1630, 465, 60, 60, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+        this.add.rectangle(220, 215, 60, 60, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+        this.add.rectangle(400, 215, 120, 60, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+        this.add.rectangle(780, 155, 115, 60, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+        this.add.rectangle(560, 155, 110, 60, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+        this.add.rectangle(1090, 155, 120, 60, 0xFF0000)
+            .setDepth(1)
+            .setVisible(false),
+
+    ]);
+    this.rectangleGroup.getChildren().forEach(rectangle => {
+        rectangle.body.setAllowGravity(false);
+    });
+
+    this.flagob = this.physics.add.image(90, 95, 'flag');
+    this.flagob.body.allowGravity = false;
+    this.flagob.setDepth(1);
+    this.flagob.setScale(4);
+    this.flagob.setImmovable(true);
+
     this.physics.world.gravity.y = 500;
     // load the map 
     map = this.make.tilemap({key: 'map'});
@@ -32,7 +82,7 @@ create() {
 
     // set the boundaries of our game world
     this.physics.world.bounds.width = groundLayer.width * 4;
-    this.physics.world.bounds.height = groundLayer.height * 4;
+    this.physics.world.bounds.height = groundLayer.height * 4 + 1000;
     
     // create the player sprite    
     player = this.physics.add.sprite(200 * 4, 200 * 4, 'player');
@@ -42,6 +92,14 @@ create() {
     var objectLayer = map.getObjectLayer('objects');
     var start = objectLayer.objects.find(obj => obj.name === 'start');
     player.setPosition(start.x * 4, start.y * 4);
+
+    // var win = objectLayer.objects.find(obj => obj.name === 'finish');
+    // this.winrect = new Phaser.Rectangle(win.x * 2, win.y * 2, win.width * 2, win.height * 2);
+    var win = objectLayer.objects.find(obj => obj.name === 'finish');
+    // Create a new Phaser 3 Rectangle object using the found object's properties
+    this.winrect = new Phaser.Geom.Rectangle(win.x * 3, win.y * 3, win.width * 3, win.height * 3);
+
+
     // small fix to our player images, we resize the physics body object slightly
     player.body.setSize(player.width, player.height-8);
     
@@ -68,7 +126,7 @@ create() {
     cursors = this.input.keyboard.createCursorKeys();
 
     // set bounds so the camera won't go outside the game world
-    this.cameras.main.setBounds(0, 0, map.widthInPixels * 4, map.heightInPixels * 4);
+    this.cameras.main.setBounds(0, 0, map.widthInPixels * 4, map.heightInPixels * 4 + 1000);
     // make the camera follow the player
     this.cameras.main.startFollow(player);
 
@@ -77,15 +135,44 @@ create() {
 }
 
 update(time, delta) {
+    this.physics.add.collider(player, this.flagob, nextsce, null, this);
+        // Collision callback function
+        function nextsce() {
+            // Trigger the scene change here
+            // For example:
+            this.scene.start('cut3');
+        }
+    this.physics.add.collider(player, this.rectangleGroup, redo, null, this);
+        // Collision callback function
+        function redo() {
+            // Trigger the scene change here
+            // For example:
+            this.scene.start('level4');
+        }
+    // if (this.winrect.contains(player.width, player.height)) {
+    //     this.scene.start('cut3');
+    // }
+    if (Phaser.Geom.Rectangle.ContainsPoint(this.winrect, { x: player.width, y: player.height })) {
+        this.scene.start('cut3');
+    }
+
     if (cursors.left.isDown)
     {
-        player.body.setVelocityX(-200);
+        player.body.setVelocityX(-500);
         //player.anims.play('walk', true); // walk left
         player.flipX = true; // flip the sprite to the left
     }
+    else if (cursors.down.isDown) {
+        //player.body.setVelocityY(-500); 
+        player.body.allowGravity = false;
+    }
+    else if (cursors.space.isDown) {
+        //player.body.setVelocityY(-500); 
+        player.body.allowGravity = true;
+    }
     else if (cursors.right.isDown)
     {
-        player.body.setVelocityX(200);
+        player.body.setVelocityX(500);
         //player.anims.play('walk', true);
         player.flipX = false; // use the original sprite looking to the right
     } else {

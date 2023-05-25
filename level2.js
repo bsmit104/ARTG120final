@@ -45,6 +45,11 @@ class Level2 extends Phaser.Scene {
             //player.anims.play('walk', true);
             this.rightKey.tint = 0xFACADE;
         }
+        else if (cursors.up.isDown) {
+            this.slime.body.setVelocityX(500);
+            //player.anims.play('walk', true);
+            this.rightKey.tint = 0xFACADE;
+        }
         else {
             this.slime.body.setVelocityX(0);
         }
