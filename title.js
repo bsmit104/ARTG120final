@@ -12,7 +12,7 @@ class Title extends Phaser.Scene {
         // });
     }
     create() {
-        this.cameras.main.setBackgroundColor('#000000');
+        this.cameras.main.setBackgroundColor('#FF2400');
         this.titl = this.add.image(
             400, //x
             250,//y
@@ -64,7 +64,7 @@ class Title extends Phaser.Scene {
         //     this.titleob.setScale(1) //resize
         //     const instructions = this.add.text(200, 500, "HOW TO PLAY:\nSmash spaceships with your bod.\n'Right'/'Left' arrows rotate.\n'up' arrow is forward.\nPress 'space' to shoot fireballs\nat alien buildings.\nDon’t get hit by lasers or crash!", { fontSize: '40px', fill: '#ff0' });
         //     instructions.setDepth(1);
-        const playText = this.add.text(350, 400, 'PLAY', { fontSize: '20px', fill: '#fff' });
+        const playText = this.add.text(340, 400, 'PLAY', { fontSize: '50px', fill: '#fff' });
         //playText.setDepth(1);
         playText.setInteractive();
         playText.on('pointerover', () => {
