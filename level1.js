@@ -151,7 +151,7 @@ class Level1 extends Phaser.Scene {
         }
 
         if (cursors.up.isDown) {
-            this.physics.velocityFromRotation(this.fish.rotation - Math.PI / 2 * 3, 200, this.fish.body.acceleration);
+            this.physics.velocityFromRotation(this.fish.rotation - Math.PI / 2 * 4, 200, this.fish.body.acceleration);
             this.upKey.tint = 0xFACADE;     // tint keyboard key
         } else {
             this.fish.setAcceleration(0);

@@ -18,8 +18,9 @@ class Cut0 extends Phaser.Scene {
         //this.add.text(300, 300, "cut 0");
 
         const video = this.add.video(400, 300, "fishvid");
-        video.play(true);
+        video.play();
 
+        video.on('complete', () => {
         this.textObject8 = this.add.text(
             700, //x
             500,//y
@@ -37,5 +38,6 @@ class Cut0 extends Phaser.Scene {
             repeat: -1,
         });
         this.input.on('pointerdown', () => this.scene.start('level2'));
+    });
     }
 }
