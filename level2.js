@@ -7,12 +7,17 @@ class Level2 extends Phaser.Scene {
         this.load.image('arrowKey', 'arrowKey.png');
         this.load.image('sewa', 'sewers.png');
         this.load.image('sewaflo', 'sewerfloor.png');
+        this.load.audio('slimeMusic', 'slimetunes.mp3');
         this.load.spritesheet('slime', 'slimetransparent.png', {
             frameWidth: 250,
             frameHeight: 150,
         });
     }
     create() {
+        this.slimeMusic = this.sound.add('slimeMusic');
+        this.slimeMusic.play();
+        this.slimeMusic.loop = true;
+
         this.rightKey = this.add.sprite(96, 64, 'arrowKey');
         this.rightKey.rotation = Math.PI / 2;
         this.rightKey.setDepth(1);
@@ -74,6 +79,7 @@ class Level2 extends Phaser.Scene {
         ///////////////to menu/////////////////////
         if (!this.physics.world.bounds.contains(this.slime.x, this.slime.y)) {
             // Scene change logic
+            this.slimeMusic.stop();
             this.scene.start('cut1');
         }
     }
