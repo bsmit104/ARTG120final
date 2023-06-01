@@ -6,6 +6,7 @@ class Level1 extends Phaser.Scene {
         this.load.path = "./assets/";
         this.load.image('arrowKey', 'arrowKey.png');
         this.load.image('agua', 'waterBG.png');
+        this.load.audio('fishMusic', 'fishjams.mp3');
         this.load.image('sewergrate', 'sewergrate.png');
         this.load.spritesheet('fish', 'fish.png', {
             frameWidth: 250,
@@ -15,6 +16,10 @@ class Level1 extends Phaser.Scene {
         this.load.spritesheet('waterlevel', 'waterlevel.png', { frameWidth: 16, frameHeight: 16 });
     }
     create() {
+        this.fishMusic = this.sound.add('fishMusic');
+        this.fishMusic.play();
+        this.fishMusic.loop = true;
+
         this.eGroup = this.physics.add.group([
             this.add.rectangle(200, 170, 100, 100, 0xFF0000)
                 .setDepth(1)
@@ -130,6 +135,7 @@ class Level1 extends Phaser.Scene {
         function nextsc() {
             // Trigger the scene change here
             // For example:
+            this.fishMusic.stop();
             this.scene.start('cut0');
         }
 

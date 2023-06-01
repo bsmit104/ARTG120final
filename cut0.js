@@ -4,9 +4,8 @@ class Cut0 extends Phaser.Scene {
     }
     preload() {
         this.load.path = "./assets/";
-        this.load.image('arrowKey', 'arrowKey.png');
-        this.load.image('agua', 'waterBG.png');
         this.load.video("fishvid", "fish.mp4");
+        this.load.audio('fishMusic', 'fishjams.mp3');
         this.load.spritesheet('pos', 'slimepossess.png', {
             frameWidth: 50,
             frameHeight: 12,
@@ -15,6 +14,9 @@ class Cut0 extends Phaser.Scene {
         }); //29
     }
     create() {
+        this.fishMusic = this.sound.add('fishMusic');
+        this.fishMusic.play();
+        this.fishMusic.loop = true;
         //this.add.text(300, 300, "cut 0");
 
         const video = this.add.video(400, 300, "fishvid");
@@ -37,6 +39,7 @@ class Cut0 extends Phaser.Scene {
             duration: 2000,
             repeat: -1,
         });
+        this.fishMusic.stop();
         this.input.on('pointerdown', () => this.scene.start('level2'));
     });
     }
