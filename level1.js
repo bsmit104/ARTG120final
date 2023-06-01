@@ -153,6 +153,7 @@ class Level1 extends Phaser.Scene {
         function redo1() {
             // Trigger the scene change here
             // For example:
+            this.fishMusic.stop();
             this.scene.start('level1');
         }
 
