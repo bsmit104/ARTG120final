@@ -1,3 +1,5 @@
+//////arrow key credit Adam Smith//////////
+
 /////////cheat codes/////////////
 // slime level : 
 // - press up increases speed right

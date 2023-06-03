@@ -6,7 +6,9 @@ class Level4 extends Phaser.Scene {
     
 preload() {
     this.load.path = "./assets/";
+    this.load.audio('arcMusic', 'Arcade_Section.mp3');
     // map made with Tiled in JSON format
+    this.load.image('arrowKey', 'arrowKey.png');
     this.load.tilemapTiledJSON('map', 'map.json');
     // tiles in spritesheet 
     this.load.spritesheet('tiles', 'tiles.png', {frameWidth: 16, frameHeight: 16});
@@ -19,6 +21,24 @@ preload() {
 }
 
 create() {
+    // add arrow key graphics as UI
+    // this.upKey = this.add.sprite(64, 32, 'arrowKey');
+    // this.leftKey = this.add.sprite(32, 64, 'arrowKey');
+    // this.downKey = this.add.sprite(64, 64, 'arrowKey');
+    // this.rightKey = this.add.sprite(96, 64, 'arrowKey');
+    // this.leftKey.rotation = Math.PI / 2 * 3;
+    // this.downKey.rotation = Math.PI;
+    // this.rightKey.rotation = Math.PI / 2;
+    // this.downKey.tint = 0x333333;
+    // this.upKey.setDepth(1);
+    // this.leftKey.setDepth(1);
+    // this.downKey.setDepth(1);
+    // this.rightKey.setDepth(1);
+
+    this.arcMusic = this.sound.add('arcMusic');
+    this.arcMusic.play();
+    this.arcMusic.loop = true;
+
     this.rectangleGroup = this.physics.add.group([
         this.add.rectangle(100, 800, 4000, 100, 0xFF0000)
             .setDepth(1)
@@ -157,6 +177,7 @@ update(time, delta) {
         function nextsce() {
             // Trigger the scene change here
             // For example:
+            this.arcMusic.stop();
             this.scene.start('cut3');
         }
     this.physics.add.collider(player, this.rectangleGroup, redo, null, this);
@@ -164,18 +185,21 @@ update(time, delta) {
         function redo() {
             // Trigger the scene change here
             // For example:
+            this.arcMusic.stop();
             this.scene.start('level4');
         }
     // if (this.winrect.contains(player.width, player.height)) {
     //     this.scene.start('cut3');
     // }
     if (Phaser.Geom.Rectangle.ContainsPoint(this.winrect, { x: player.width, y: player.height })) {
+        this.arcMusic.stop();
         this.scene.start('cut3');
     }
 
     if (cursors.left.isDown)
     {
         player.body.setVelocityX(-500);
+        // this.leftKey.tint = 0xFACADE;   // tint keyboard key
         //player.anims.play('walk', true); // walk left
         player.flipX = true; // flip the sprite to the left
     }
@@ -189,10 +213,13 @@ update(time, delta) {
     }
     else if (cursors.right.isDown)
     {
+        // this.rightKey.tint = 0xFACADE;   // tint keyboard key
         player.body.setVelocityX(500);
         //player.anims.play('walk', true);
         player.flipX = false; // use the original sprite looking to the right
     } else {
+        // this.leftKey.tint = 0xFFFFFF;   // un-tint keys
+        // this.rightKey.tint = 0xFFFFFF;
         player.body.setVelocityX(0);
         //player.anims.play('idle', true);
     }

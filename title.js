@@ -6,12 +6,17 @@ class Title extends Phaser.Scene {
     preload(){
         this.load.path = "./assets/";
         this.load.image('tit', 'title2.png');
+        this.load.audio('beat', 'heartbeat.mp3');
         // this.load.spritesheet('met', 'metss.png', {
         //     frameWidth: 120,
         //     frameHeight: 120
         // });
     }
     create() {
+        this.beat = this.sound.add('beat');
+        this.beat.play();
+        this.beat.loop = true;
+
         this.cameras.main.setBackgroundColor('#FF2400');
         this.titl = this.add.image(
             400, //x
@@ -74,6 +79,7 @@ class Title extends Phaser.Scene {
             playText.setStyle({ fill: '#fff' });
         });
         playText.on('pointerdown', () => {
+            this.beat.stop();
             this.scene.start('level1');
         });
 

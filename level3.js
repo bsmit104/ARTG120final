@@ -7,6 +7,7 @@ class Level3 extends Phaser.Scene {
         //this.load.image('arrowKey', 'arrowKey.png');
         this.load.image('sewa', 'sewers.png');
         this.load.image('arc', 'arcademach.png');
+        this.load.audio('ratMusic', 'Rat_Section.mp3');
         //this.load.image('fplayer', 'rat.png');
         this.load.spritesheet('fplayer', 'rat.png', {
             frameWidth: 249,
@@ -21,6 +22,10 @@ class Level3 extends Phaser.Scene {
         this.load.image('sewaflo', 'sewerfloor.png');
     }
     create() {
+        this.ratMusic = this.sound.add('ratMusic');
+        this.ratMusic.play();
+        this.ratMusic.loop = true;
+
         this.physics.world.gravity.y = 500;
 
         this.physics.start(); //made gravity stronger for some reason
@@ -144,6 +149,7 @@ class Level3 extends Phaser.Scene {
         function nextsce() {
             // Trigger the scene change here
             // For example:
+            this.ratMusic.stop();
             this.scene.start('level4');
         }
     }
@@ -157,6 +163,7 @@ class Level3 extends Phaser.Scene {
         // }
         if (!this.physics.world.bounds.contains(player.x, player.y)) {
             // Scene change logic
+            this.ratMusic.stop();
             this.scene.start('level3');
         }
 

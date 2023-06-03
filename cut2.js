@@ -4,8 +4,7 @@ class Cut2 extends Phaser.Scene {
     }
     preload() {
         this.load.path = "./assets/";
-        this.load.image('arrowKey', 'arrowKey.png');
-        this.load.image('agua', 'waterBG.png');
+        this.load.audio('beat', 'heartbeat.mp3');
         this.load.spritesheet('pos', 'slimepossess.png', {
             frameWidth: 50,
             frameHeight: 12,
@@ -14,6 +13,10 @@ class Cut2 extends Phaser.Scene {
         }); //29
     }
     create() {
+        this.beat = this.sound.add('beat');
+        this.beat.play();
+        this.beat.loop = true;
+
         this.add.text(300, 300, "cut 2");
 
         this.textObject8 = this.add.text(
@@ -32,6 +35,7 @@ class Cut2 extends Phaser.Scene {
             duration: 2000,
             repeat: -1,
         });
+        this.beat.stop();
         this.input.on('pointerdown', () => this.scene.start('level3'));
     }
 }
