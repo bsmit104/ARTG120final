@@ -6,12 +6,6 @@ class Cut0 extends Phaser.Scene {
         this.load.path = "./assets/";
         this.load.video("fishvid", "fish.mp4");
         this.load.audio('fishMusic', 'fishjams.mp3');
-        this.load.spritesheet('pos', 'slimepossess.png', {
-            frameWidth: 50,
-            frameHeight: 12,
-            // frameWidth: 1158,
-            // frameHeight: 420,
-        }); //29
     }
     create() {
         this.fishMusic = this.sound.add('fishMusic');
