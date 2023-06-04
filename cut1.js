@@ -4,6 +4,8 @@ class Cut1 extends Phaser.Scene {
     }
     preload() {
         this.load.path = "./assets/";
+        this.load.audio('beat', 'heartbeat.mp3');
+        this.load.audio('ahh', 'Rat_death.mp3');
         this.load.video("slimerat", "slime_to_rat.mp4");
         // this.load.spritesheet('pos', 'slimepossess.png', {
         //     frameWidth: 50,
@@ -13,6 +15,21 @@ class Cut1 extends Phaser.Scene {
         // }); //29
     }
     create() {
+
+        this.beat = this.sound.add('beat');
+        this.beat.play();
+        this.beat.loop = true;
+
+        this.time.addEvent({
+            delay: 1000, 
+            loop:false,
+            callback: () => {
+                this.ahh = this.sound.add('ahh');
+                    // Play the sound
+                this.ahh.play();
+                this.ahh.loop = true;
+            }
+        })
 
         const video = this.add.video(400, 300, "slimerat");
         video.play();
@@ -34,6 +51,8 @@ class Cut1 extends Phaser.Scene {
             duration: 2000,
             repeat: -1,
         });
+        this.beat.stop();
+        this.ahh.stop();
         this.input.on('pointerdown', () => this.scene.start('level3'));
     });
 
